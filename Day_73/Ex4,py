@@ -1,0 +1,27 @@
+def can_form_sequence(N, K, A, B):
+    dpA, dpB = [False] * N, [False] * N
+    
+    # Initialization
+    dpA[0], dpB[0] = True, True  
+
+    for i in range(N - 1):
+        if dpA[i]:
+            if abs(A[i] - A[i+1]) <= K:
+                dpA[i+1] = True
+            if abs(A[i] - B[i+1]) <= K:
+                dpB[i+1] = True
+        
+        if dpB[i]:
+            if abs(B[i] - A[i+1]) <= K:
+                dpA[i+1] = True
+            if abs(B[i] - B[i+1]) <= K:
+                dpB[i+1] = True
+    
+    return "Yes" if dpA[N-1] or dpB[N-1] else "No"
+
+# Input Handling
+N, K = map(int, input().split())
+A = list(map(int, input().split()))
+B = list(map(int, input().split()))
+
+print(can_form_sequence(N, K, A, B))
